@@ -1,22 +1,31 @@
-import os,sys
 from socket import *
+import sys
+
+direccionServidor = ""
+puertoServidor = 10000
 
 #Generamos un nuevo socket
-IPServidor = "localhost"
-puertoServidor = 9899
-
 socketServidor = socket(AF_INET, SOCK_STREAM)
 #Establecemos la conexión
-socketServidor.bind((IPServidor,puertoServidor))
-print("empezando a levantar el puerto")
+socketServidor.bind( (direccionServidor,puertoServidor) )
 socketServidor.listen()
-prueba="Mensaje recibido"
+
 while True:
-    print >>sys.stderr, 'Esperando para realizar conexión'
+    #Establecemos la conexión
     socketConexion, addr = socketServidor.accept()
-    mensajeRecibido = socketConexion.recv(4096).decode()
-    print(mensajeRecibido)
-    socketConexion.send(prueba.encode())
-#cerramos conexion
-print("Desconectado el cliente", addr)
-socketConexion.close()
+    print("Conectando con un cliente", addr)
+    while True:
+        #recibimos el mensaje del cliente
+        mensajeRecibido = socketConexion.recv(4096).decode()
+        print(mensajeRecibido)
+
+        #esta condicion no se cumplira hasta que la cadena sea adios
+        if mensajeRecibido == 'adios':
+            break
+        #mandamos mensaje al cliente
+        socketConexion.send(input().encode())
+
+    print("Desconectado el cliente", addr)
+    #cerramos conexion
+    socketConexion.close()
+    sys.exit()
