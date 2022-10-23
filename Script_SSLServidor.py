@@ -1,23 +1,46 @@
 import socket
 import ssl
+import multiprocessing
+
+def process_request(sock):
+	try:
+		sock.send("Hi client!")
+		print(sock.recv(256))
+	finally:
+		sock.shutdown(socket.SHUT_RDWR)
+		sock.close()
+
+main_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 """
-Se crea un objeto del tipo SSLContext, el cual recibe por parametro el protocolo que
-se desea utilizar en la negociacion de la seguridad para el establecimiento de la conexion.
+Cuando en una ejecucion anterior se deja el socket en un estado de timeout (TIME_WAIT), el 
+flag socket.SO_REUSEADDR permite indicar al Kernel que sera posible volver a utilizar el
+socket sin tener que esperar a que el timeout expire.
 """
-context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
-
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+main_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 """
-Envuelve el socket dentro del contexto de seguridad especificado anteriormente.
-Retorna un objecto del tipo SSLSocket.
+La especificacion de 0.0.0.0 permite indicar al Kernel que se desea enlazar el socket a 
+todas las direcciones disponibles, en este caso de IPv4 (AF_INET).
 """
-conn = context.wrap_socket(sock)
+main_socket.bind(("0.0.0.0", 443))
 
-conn.connect(("192.168.1.183", 443))
+main_socket.listen(5)
 
-print(conn.recv(256))
-conn.send("Hi Server!")
+while True:
+	(client_socket, (client_ip, client_port)) = main_socket.accept()
+	print("Connection accepted from %s:%s. Processing the request..." % (client_ip, client_port))
 
-conn.close()
+	"""
+	Envolvemos el socket dentro del contexto de seguridad del protocolo TLSv1.
+	Se especifica que se trata del lado servidor y por lo tanto se define la 
+	ruta hacia los certificados que deben utilizarse. 
+	"""
+	conn = ssl.wrap_socket(client_socket, server_side=True, 
+		certfile="./certificates/server.crt", keyfile="./certificates/server.key",
+		ssl_version=ssl.PROTOCOL_TLS)
+
+	subprocess = multiprocessing.Process(target=process_request, args=(conn,))
+	subprocess.start()
+
+main_socket.close()
