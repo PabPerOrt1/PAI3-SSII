@@ -1,7 +1,7 @@
 from socket import *
 import ssl,sys
 
-IPServidor = "10.100.225.22"
+IPServidor = "localhost"
 puertoServidor = 8443
 
 def client_conect():
@@ -27,3 +27,6 @@ def client_conect():
             #cerramos socket
             conex_wrap.close()
             sys.exit()
+
+if __name__ == "__main__":
+    client_conect()
