@@ -5,7 +5,7 @@ with open("Config.config") as configfile:
         ip_elegido =  configfile.readline().rstrip()
 IPServidor = ip_elegido.replace("ip_cliente=","")
 
-puertoServidor = 80
+puertoServidor = 443
 
 #se decaran e inicializaran los valores del socket del cliente
 socketCliente = socket(AF_INET, SOCK_STREAM)

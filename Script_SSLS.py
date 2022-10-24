@@ -25,14 +25,12 @@ context = ssl.create_default_context()
 # context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
 # context.load_cert_chain(certfile="mycertfile", keyfile="mykeyfile")
 
-socketServidor = socket()
-socketServidor.bind(("192.168.1.43", 8443))
+socketServidor = socket(AF_INET,SOCK_STREAM, 0)
+socketServidor.bind(("", 8443))
 socketServidor.listen(5)
 while True:
     socketConexion, addr = socketServidor.accept()
     ssock = context.wrap_socket(socketConexion, server_side=True)
-            #Establecemos la conexión
-            
     print("Conectando con un cliente", addr)
     try:
         deal_with_client(ssock)

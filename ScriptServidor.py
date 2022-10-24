@@ -2,7 +2,7 @@ from socket import *
 import sys
 
 direccionServidor = ""
-puertoServidor = 10000
+puertoServidor = 443
 
 #Generamos un nuevo socket
 socketServidor = socket(AF_INET, SOCK_STREAM)
