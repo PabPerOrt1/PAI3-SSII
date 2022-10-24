@@ -5,7 +5,7 @@ import ssl,sys
 context = ssl.create_default_context()
 #context.load_verify_locations('path/to/cabundle.pem')
 
-IPServidor = "10.100.225.22"
+IPServidor = "10.100.224.222"
 puertoServidor = 8443
 socketCliente=socket(AF_INET, SOCK_STREAM, 0)
 
