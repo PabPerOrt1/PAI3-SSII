@@ -1,23 +1,29 @@
-import socket
-import ssl
+from socket import *
+import ssl,sys
 
-"""
-Se crea un objeto del tipo SSLContext, el cual recibe por parametro el protocolo que
-se desea utilizar en la negociacion de la seguridad para el establecimiento de la conexion.
-"""
-context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+IPServidor = "10.100.225.22"
+puertoServidor = 8443
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+def client_conect():
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    context.load_verify_locations('new.pem')
 
-"""
-Envuelve el socket dentro del contexto de seguridad especificado anteriormente.
-Retorna un objecto del tipo SSLSocket.
-"""
-conn = context.wrap_socket(sock)
 
-conn.connect(("10.0.2.15", 443))
-
-print(conn.recv(256))
-conn.send("Hi Server!")
-
-conn.close()
+    soc=socket()
+    conex_wrap = context.wrap_socket(soc, server_hostname=IPServidor)
+    conex_wrap.connect((IPServidor,puertoServidor))
+    print("Conexión exitosa...")
+    while True:
+        #escribimos el mensaje
+        mensaje = input()
+        if mensaje != 'adios':
+            #enviamos mensaje
+            conex_wrap.send(mensaje.encode())
+            #recibimos el mensaje
+            respuesta = conex_wrap.recv(4096).decode()
+            print(respuesta)
+        else:
+            conex_wrap.send(mensaje.encode())
+            #cerramos socket
+            conex_wrap.close()
+            sys.exit()
