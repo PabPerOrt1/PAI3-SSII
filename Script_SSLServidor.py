@@ -5,7 +5,7 @@ Puerto = 8443
 
 def get_conection():
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-    context.load_cert_chain('new.pem', 'private.key')
+    context.load_cert_chain('Keys/new.pem', 'Keys/private.key')
 
     soc = socket()
     soc.bind(("", Puerto))

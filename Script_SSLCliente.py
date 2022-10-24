@@ -6,7 +6,7 @@ puertoServidor = 8443
 
 def client_conect():
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-    context.load_verify_locations('new.pem')
+    context.load_verify_locations('Keys/new.pem')
 
 
     soc=socket()
