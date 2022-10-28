@@ -1,1 +1,3 @@
 # PAI3-SSII
+
+# Se podrá elegir entre 2 paquetes de Cipher Suites, según el número introducido. Representando 0 al paquete default; con esto escogeríamos los Cipher Suites que nos vienen por defecto (No recomendado). En caso de poner otro número estaríamos cogiendo el paquete que nos incluye exclusivamente los Cipher Suites recomendados, con protocolo TLSv1.3 y TLSv1.2. Este último paquete es el que nosotros recomendamos escoger.
