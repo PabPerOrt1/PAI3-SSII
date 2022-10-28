@@ -18,17 +18,13 @@ def get_conection():
         ssock = context.wrap_socket(soc, server_side=True)
         conn, addr = ssock.accept()
         print("Conectando con un cliente", addr)
-        while True:
-        #recibimos el mensaje del 
-            mensajeRecibido = conn.recv(4096).decode()
-            print(mensajeRecibido)
-
-        #esta condicion no se cumplira hasta que la cadena sea adios
-            if mensajeRecibido == 'adios':
-                break
-        #mandamos mensaje al 
-            conn.send(input().encode())
-
+        mensajeRecibido = conn.recv(4096).decode()
+        print(mensajeRecibido)
+        #AQUI IRIA LA COMPROBACION
+        ##
+        conn.send("Se ha recibido el mensaje")
+        ##COMPROBACION COMPROBACION
+        ##
         print("Desconectado el cliente", addr)
         #cerramos conexion
         conn.close()

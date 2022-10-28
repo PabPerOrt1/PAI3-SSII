@@ -10,6 +10,12 @@ IPServidor = ip_elegido.replace("ip_cliente=","")
 puertoServidor = puerto_elegido.replace("Puerto_elegido=","")
 cipherPack_elegido = cipherPack_seleccionado.replace("cipherPack_A_Eleccion=","")
 
+def crear_mensaje():
+    usuario = input("Indique la cuenta origen: ")
+    contraseña = input("Indique la cuenta destino: ")
+    mensaje= usuario + contraseña + ssl.SSLSocket.version()
+    return mensaje
+
 
 def client_conect():
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
@@ -22,20 +28,15 @@ def client_conect():
     conex_wrap = context.wrap_socket(soc, server_hostname=IPServidor)
     conex_wrap.connect((IPServidor,int(puertoServidor)))
     print("Conexión exitosa...")
-    while True:
-        #escribimos el mensaje
-        mensaje = input()
-        if mensaje != 'adios':
-            #enviamos mensaje
-            conex_wrap.send(mensaje.encode())
-            #recibimos el mensaje
-            respuesta = conex_wrap.recv(4096).decode()
-            print(respuesta)
-        else:
-            conex_wrap.send(mensaje.encode())
-            #cerramos socket
-            conex_wrap.close()
-            sys.exit()
+    #escribimos el mensaje
+    mensaje = crear_mensaje()
+    conex_wrap.send(mensaje.encode())
+    #recibimos el mensaje
+    respuesta = conex_wrap.recv(4096).decode()
+    print(respuesta)
+    
+    conex_wrap.close()
+    sys.exit()
 
 if __name__ == "__main__":
     client_conect()
