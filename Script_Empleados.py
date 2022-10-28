@@ -1,28 +1,30 @@
-import os, secrets, random 
-import requests
+import os, secrets, random
 
 from random import randint
 
-url = requests.get('https://svnweb.freebsd.org/csrg/share/dict/propernames?view=co')
-datos = requests.get(url)
-texto = datos.text
-palabras = texto.split()
-num_aleatorio = randint(0,len(palabras))
-#print(palabras[num_aleatorio])
+
+
+url = 'https://svnweb.freebsd.org/csrg/share/dict/propernames?view=co'
+palabras = url.split()
 
 url_c = 'https://svnweb.freebsd.org/csrg/share/dict/words?view=co&content-type=text/plain'
-datos_c = requests.get(url)
-texto_c = datos.text
-passwords = texto.split()
-num_rand_c = randint(0,len(passwords))
-#print(passwords[num_rand_c])
+passwords = url_c.split()
 
 def main():
     i = 1
-    while i < 301:
+
+    for i in range(1,301):
+        lista_name = []
+        lista_contraseñas = []
+        num_aleatorio = randint(1,len(palabras)-1)
+        lista_name.append(palabras[num_aleatorio] )
+        num_rand_c = randint(1,len(passwords)-1)
+        lista_contraseñas.append(passwords[num_rand_c])
+        
         file = open('./Empleados/Empleado' + str(i) + '.txt', "w")
-        file.write((palabras[i]), passwords[i])
+        file.write("{}, {}".format(lista_name[0], lista_contraseñas[0]))
         file.close()
         i +=1
+
 if __name__ == '__main__':
     main()
