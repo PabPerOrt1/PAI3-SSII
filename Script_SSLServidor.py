@@ -1,15 +1,17 @@
 import ssl,sys
 from socket import *
 
-Puerto = 8443
+with open("Config.config") as configfile:
+        puerto_elegido = configfile.readlines()[1]
+Puerto = puerto_elegido.replace("Puerto_elegido=","")
 
 def get_conection():
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     context.load_cert_chain('Keys/new.pem', 'Keys/private.key')
 
     soc = socket()
-    soc.bind(("", Puerto))
-    print(f"El servidor está corriendo en el puerto '{Puerto}'")
+    soc.bind(("", int(Puerto)))
+    print(f"El servidor está corriendo en el puerto '{int(Puerto)}'")
     print("Escuchando conexiones...")
     soc.listen(5)
     while True:

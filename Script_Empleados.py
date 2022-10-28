@@ -2,8 +2,6 @@ import os, secrets, random
 
 from random import randint
 
-
-
 url = 'https://svnweb.freebsd.org/csrg/share/dict/propernames?view=co'
 palabras = url.split()
 
