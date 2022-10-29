@@ -14,20 +14,20 @@ def get_conection():
     print(f"El servidor está corriendo en el puerto '{int(Puerto)}'")
     print("Escuchando conexiones...")
     soc.listen(5)
-    while True:
-        ssock = context.wrap_socket(soc, server_side=True)
-        conn, addr = ssock.accept()
-        print("Conectando con un cliente", addr)
-        mensajeRecibido = conn.recv(4096).decode()
-        print(mensajeRecibido)
-        #AQUI IRIA LA COMPROBACION
-        ##
-        conn.send("Se ha recibido el mensaje")
-        ##COMPROBACION COMPROBACION
-        ##
-        print("Desconectado el cliente", addr)
-        #cerramos conexion
-        conn.close()
-        sys.exit()
+    
+    ssock = context.wrap_socket(soc, server_side=True)
+    conn, addr = ssock.accept()
+    print("Conectando con un cliente", addr)
+    mensajeRecibido = conn.recv(4096).decode()
+    print(mensajeRecibido)
+    #AQUI IRIA LA COMPROBACION
+    ##
+    conn.send("Se ha recibido el mensaje")
+    ##COMPROBACION COMPROBACION
+    ##
+    print("Desconectado el cliente", addr)
+    #cerramos conexion
+    conn.close()
+    sys.exit()
 if __name__ == "__main__":
     get_conection()
