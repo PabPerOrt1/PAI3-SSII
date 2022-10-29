@@ -7,19 +7,17 @@ datos = requests.get(url)
 texto = datos.text
 palabras = texto.split("\n")
 
+with open('.\passwords.txt', 'r') as pass_file:
+        lista_pass = pass_file.readlines()
 
 def main():
     print(len(palabras))
     for i in range(1,301):
-        #num_aleatorio = randint(1,300)
-        #lista_name.append(palabras[i])
-        #num_rand_c = randint(1,300)
-        #lista_contraseñas.append(passwords[i])
         
-        file = open('./Empleados/Empleado' + str(i) + '.txt', "w")
-        file.write(f'{palabras[i]}')
-        file.write(f'\n{palabras[i]}1234')
+        file = open('./BDD.txt', "a")
+        file.write(f'{palabras[i]}' + ':' + lista_pass[i-1])
         file.close()
+        pass_file.close()
 
 if __name__ == '__main__':
     main()
