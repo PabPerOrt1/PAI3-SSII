@@ -11,11 +11,11 @@ with open('.\passwords.txt', 'r') as pass_file:
         lista_pass = pass_file.readlines()
 
 def main():
-    print(len(palabras))
     for i in range(1,301):
-        
-        file = open('./BDD.txt', "a")
-        file.write(f'{palabras[i]}' + ':' + lista_pass[i-1])
+        file = open('./Ficheros_de_Prueba/Prueba' + str(i) + '.txt', "w")
+        file.write(palabras[i] + "\n")
+        file.write(lista_pass[i-1])
+        file.write("Hola soy " + palabras[i] + " y me encanta este servidor!")
         file.close()
         pass_file.close()
 
