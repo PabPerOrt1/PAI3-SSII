@@ -16,7 +16,7 @@ def crear_mensaje(socket):
     usuario = input("Indique el usuario: ")
     password = input("Indique la contraseña: ")
     mensaje = input("Escriba un mensaje: ")
-    datos_mensaje= usuario + password + mensaje + ssl.SSLSocket.version(socket)
+    datos_mensaje= usuario +" "+ password +" "+ mensaje+" " + ssl.SSLSocket.version(socket)
     return datos_mensaje
 
 
