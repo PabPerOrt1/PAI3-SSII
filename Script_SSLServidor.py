@@ -6,19 +6,29 @@ with open("Config.config") as configfile:
         puerto_elegido = configfile.readlines()[1]
 Puerto = puerto_elegido.replace("Puerto_elegido=","")
 
+
+def comprobarCredenciales(mensajeRecibido):
+    string_separado = mensajeRecibido.split()
+    #datos_mensaje = string_separado[0]+" "+ string_separado[1]+ " " +string_separado[2]+" " + string_separado[3]
+    usuario = string_separado[0]
+    password = string_separado[1]
+    mensaje = string_separado[2]
+    SSLversion = string_separado[3]
+    with open('.txt','r') as usuariosFiles:
+            lineas_usuario = usuariosFiles.readlines()
+    with open('.txt','r') as passwordFiles:
+            lineas_password = passwordFiles.readlines()
+    if usuario in lineas_usuario and password in lineas_password:
+        with open('Mensajes_Almacenados.txt','a') as afile:
+            afile.write(f"El usuario '{usuario}' escribió el mensaje:" + mensaje)
+
 def get_conection():
     #context = ssl.create_default_context()
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     context.load_cert_chain('Keys/new.pem', 'Keys/private.key')
-
     soc = socket()
-<<<<<<< HEAD
-    soc.bind(("10.100.225.22", Puerto))
-    print(f"El servidor está corriendo en el puerto '{Puerto}'")
-=======
     soc.bind(("", int(Puerto)))
     print(f"El servidor está corriendo en el puerto '{int(Puerto)}'")
->>>>>>> 2efd785425e37df18c2aecfbaefb16c7c04d69eb
     print("Escuchando conexiones...")
     soc.listen(5)
     
@@ -29,7 +39,7 @@ def get_conection():
     print(mensajeRecibido)
     #AQUI IRIA LA COMPROBACION
     ##
-    conn.send("Se ha recibido el mensaje")
+    conn.send(("Se ha recibido el mensaje").encode())
     ##COMPROBACION COMPROBACION
     ##
     print("Desconectado el cliente", addr)
