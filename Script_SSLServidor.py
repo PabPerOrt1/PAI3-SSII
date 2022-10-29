@@ -16,7 +16,7 @@ def comprobarCredenciales(mensajeRecibido):
     with open('BDD.txt','r') as usuariosFiles:
         lineas = usuariosFiles.readlines()
         for i in range(len(lineas)):
-            spliteao = lineas[i].split(':')
+            spliteao = lineas.split(':')
             limpiar_password=spliteao[1].replace("\n","")
             if usuario == spliteao[0] and password == limpiar_password :
                 with open('Mensajes_Almacenados.txt','a') as afile:
