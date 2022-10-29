@@ -1,14 +1,16 @@
+from multiprocessing import context
 import ssl,sys
 from socket import *
 
 Puerto = 8443
 
 def get_conection():
+    #context = ssl.create_default_context()
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     context.load_cert_chain('Keys/new.pem', 'Keys/private.key')
 
     soc = socket()
-    soc.bind(("", Puerto))
+    soc.bind(("10.100.225.22", Puerto))
     print(f"El servidor está corriendo en el puerto '{Puerto}'")
     print("Escuchando conexiones...")
     soc.listen(5)
