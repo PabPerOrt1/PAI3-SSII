@@ -23,7 +23,7 @@ def comprobarCredenciales(mensajeRecibido):
 
     if username in userPass and userPass[username] == passw:
         with open('Mensajes_Almacenados.txt','a+') as afile:
-            afile.write("\n" + f"El usuario '{username}' escribio el mensaje: " + mensaje + f". Con protocolo '{SSLversion}'")
+            afile.write(f"El usuario '{username}' escribio el mensaje: " + mensaje + f". Con protocolo '{SSLversion}'"+ "\n" )
         return "Comprobación exitosa"
     else:
         return "Comprobación errónea"

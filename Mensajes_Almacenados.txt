@@ -1,8 +1,2 @@
-
-El usuario 'Adam' escribio el mensaje: Hola soy Adam y me encanta este servidor!. Con protocolo 'TLSv1.3'
-El usuario 'Adam' escribio el mensaje: Hola soy Adam y me encanta este servidor!. Con protocolo 'TLSv1.3'
-El usuario 'Adam' escribio el mensaje: Hola soy Adam y me encanta este servidor!. Con protocolo 'TLSv1.3'
-El usuario 'Adam' escribio el mensaje: Hola soy Adam y me encanta este servidor!. Con protocolo 'TLSv1.3'
-El usuario 'Adam' escribio el mensaje: Hola soy Adam y me encanta este servidor!. Con protocolo 'TLSv1.3'
-El usuario 'Adam' escribio el mensaje: Hola soy Adam y me encanta este servidor!. Con protocolo 'TLSv1.3'
-El usuario 'Adam' escribio el mensaje: Hola soy Adam y me encanta este servidor!. Con protocolo 'TLSv1.3'
+El usuario 'Agatha' escribio el mensaje: mensaje. Con protocolo 'TLSv1.3'
+El usuario 'Adam' escribio el mensaje: kiriki. Con protocolo 'TLSv1.3'

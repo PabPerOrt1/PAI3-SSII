@@ -30,6 +30,8 @@ def lee_mensaje(i,socket):
 #Funcional para hacer mediante inputs en consola
 def client_conect():
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    context.options &= ~ssl.OP_NO_TLSv1_2
+    context.options &= ~ssl.OP_NO_RENEGOTIATION
     context.load_verify_locations('Keys/new.pem')
     if cipherPack_elegido !='0':
         context.set_ciphers(cipher)
