@@ -85,12 +85,12 @@ def client_conect_prueba(acc):
     print(respuesta)
     time.sleep(1)
     conex_wrap.close()
-    sys.exit()
+
 
 if __name__ == "__main__":
     #client_conect()
     acc = 1
-    for acc in range(302):
+    for acc in range(1,301):
         #Cambiar la funcion depende lo que se quiera hacer
         client_conect()
     acc+=1

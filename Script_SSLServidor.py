@@ -66,6 +66,6 @@ while 1:
     conn, addr = ssock.accept()
     #Cambiar worker o worker_Test depende lo que se quiera hacer
     threading.Thread(target=worker, args=(conn, addr)).start()
-    print ("Hay " + str(acc) + " clientes conectados")
+    #print ("Hay " + str(acc) + " clientes conectados")
     acc+=1
         
