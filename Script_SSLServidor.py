@@ -53,30 +53,30 @@ def get_conection():
     sys.exit()
 
 if __name__ == "__main__":
-    #get_conection()
-    i = 1
-    while True:
-        while i <302:
-            context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-            context.load_cert_chain('Keys/new.pem', 'Keys/private.key')
-            soc = socket()
-            soc.bind(("", int(Puerto)))
-            print(f"El servidor está corriendo en el puerto '{int(Puerto)}'")
-            print("Escuchando conexiones...")
-            soc.listen(300)
+    get_conection()
+    # i = 1
+    # while True:
+    #     while i <302:
+    #         context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    #         context.load_cert_chain('Keys/new.pem', 'Keys/private.key')
+    #         soc = socket()
+    #         soc.bind(("", int(Puerto)))
+    #         print(f"El servidor está corriendo en el puerto '{int(Puerto)}'")
+    #         print("Escuchando conexiones...")
+    #         soc.listen(300)
             
-            ssock = context.wrap_socket(soc, server_side=True)
-            conn, addr = ssock.accept()
-            print("Conectando con un cliente", addr)
-            mensajeRecibido = conn.recv(4096).decode()
-            print(mensajeRecibido)
-            if comprobarCredenciales(mensajeRecibido)=="Comprobación exitosa":
-                conn.send(("La comprobación ha sido exitosa, estamos guardando su mensaje").encode())
-            else: 
-                conn.send(("La comprobación ha sido errónea. Inténtelo de nuevo").encode())
+    #         ssock = context.wrap_socket(soc, server_side=True)
+    #         conn, addr = ssock.accept()
+    #         print("Conectando con un cliente", addr)
+    #         mensajeRecibido = conn.recv(4096).decode()
+    #         print(mensajeRecibido)
+    #         if comprobarCredenciales(mensajeRecibido)=="Comprobación exitosa":
+    #             conn.send(("La comprobación ha sido exitosa, estamos guardando su mensaje").encode())
+    #         else: 
+    #             conn.send(("La comprobación ha sido errónea. Inténtelo de nuevo").encode())
 
-            print("Desconectado el cliente", addr)
-        i+=1
-        time.sleep(5)
-        conn.close()
-        sys.exit()
+    #         print("Desconectado el cliente", addr)
+    #     i+=1
+    #     time.sleep(5)
+    #     conn.close()
+    #     sys.exit()

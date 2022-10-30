@@ -16,7 +16,7 @@ def crear_mensaje(socket):
     usuario = input("Indique el usuario: ")
     password = input("Indique la contraseña: ")
     mensaje = input("Escriba un mensaje: ")
-    datos_mensaje= usuario +" "+ password +" "+ mensaje+" " + ssl.SSLSocket.version(socket)
+    datos_mensaje= usuario +","+ password +","+ mensaje+","+ ssl.SSLSocket.version(socket)
     return datos_mensaje
 
 def lee_mensaje(i,socket):
@@ -33,7 +33,7 @@ def client_conect():
     context.load_verify_locations('Keys/new.pem')
     if cipherPack_elegido !='0':
         context.set_ciphers(cipher)
-    print("Los CipherSuite elegidos son los siguientes:",context.get_ciphers())
+    #print("Los CipherSuite elegidos son los siguientes:",context.get_ciphers())
     soc=socket()
     conex_wrap = context.wrap_socket(soc, server_hostname=IPServidor)
     conex_wrap.connect((IPServidor,int(puertoServidor)))
@@ -50,29 +50,29 @@ def client_conect():
 
 
 if __name__ == "__main__":
-    #client_conect()
-    i = 1
-    while True:
-        while i <302:
-            context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-            context.load_verify_locations('Keys/new.pem')
+    client_conect()
+    # i = 1
+    # while True:
+    #     while i <302:
+    #         context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    #         context.load_verify_locations('Keys/new.pem')
             
-            if cipherPack_elegido !='0':
-                context.set_ciphers(cipher)
-            soc=socket()
-            conex_wrap = context.wrap_socket(soc, server_hostname=IPServidor)
-            conex_wrap.connect((IPServidor,int(puertoServidor)))
-            print("Conexión exitosa...")
-            #escribimos el mensaje
-            mensaje = lee_mensaje(i,conex_wrap)
-            conex_wrap.send(mensaje.encode())
-            #recibimos el mensaje
-            respuesta = conex_wrap.recv(4096).decode()
-            print(respuesta)
-            conex_wrap.close()
+    #         if cipherPack_elegido !='0':
+    #             context.set_ciphers(cipher)
+    #         soc=socket()
+    #         conex_wrap = context.wrap_socket(soc, server_hostname=IPServidor)
+    #         conex_wrap.connect((IPServidor,int(puertoServidor)))
+    #         print("Conexión exitosa...")
+    #         #escribimos el mensaje
+    #         mensaje = lee_mensaje(i,conex_wrap)
+    #         conex_wrap.send(mensaje.encode())
+    #         #recibimos el mensaje
+    #         respuesta = conex_wrap.recv(4096).decode()
+    #         print(respuesta)
+    #         conex_wrap.close()
             
-        i+=1
-        time.sleep(10)
-        sys.exit()
+    #     i+=1
+    #     time.sleep(10)
+    #     sys.exit()
         
     
