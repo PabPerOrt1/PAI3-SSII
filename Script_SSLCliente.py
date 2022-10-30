@@ -27,7 +27,7 @@ def lee_mensaje(i,socket):
     datos_mensaje= usuario +","+ password +","+ mensaje+ "," + ssl.SSLSocket.version(socket)
     return datos_mensaje
 
-#Funcional para hacer mediante inputs en consola
+#Funcional para hacer mediante inputs en CMD
 def client_conect():
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     context.options &= ~ssl.OP_NO_TLSv1_2
@@ -50,31 +50,50 @@ def client_conect():
     conex_wrap.close()
     sys.exit()
 
+#Prueba para 300 empleados a la vez
+def client_prueba():
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    context.load_verify_locations('Keys/new.pem')
+            
+    if cipherPack_elegido !='0':
+        context.set_ciphers(cipher)
+    soc=socket()
+    conex_wrap = context.wrap_socket(soc, server_hostname=IPServidor)
+    conex_wrap.connect((IPServidor,int(puertoServidor)))
+    print("Conexión exitosa...")
+
+    time.sleep(1)
+
+#Prueba para Mensajes Almacenados
+def client_conect_prueba(acc):
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    context.options &= ~ssl.OP_NO_TLSv1_2
+    context.options &= ~ssl.OP_NO_RENEGOTIATION
+    context.load_verify_locations('Keys/new.pem')
+    if cipherPack_elegido !='0':
+        context.set_ciphers(cipher)
+    #print("Los CipherSuite elegidos son los siguientes:",context.get_ciphers())
+    soc=socket()
+    conex_wrap = context.wrap_socket(soc, server_hostname=IPServidor)
+    conex_wrap.connect((IPServidor,int(puertoServidor)))
+    print("Conexión exitosa...")
+    #escribimos el mensaje
+    mensaje = lee_mensaje(acc,conex_wrap)
+    conex_wrap.send(mensaje.encode())
+    #recibimos el mensaje
+    respuesta = conex_wrap.recv(4096).decode()
+    print(respuesta)
+    time.sleep(1)
+    conex_wrap.close()
+    sys.exit()
 
 if __name__ == "__main__":
-    client_conect()
-    # i = 1
-    # while True:
-    #     while i <302:
-    #         context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-    #         context.load_verify_locations('Keys/new.pem')
-            
-    #         if cipherPack_elegido !='0':
-    #             context.set_ciphers(cipher)
-    #         soc=socket()
-    #         conex_wrap = context.wrap_socket(soc, server_hostname=IPServidor)
-    #         conex_wrap.connect((IPServidor,int(puertoServidor)))
-    #         print("Conexión exitosa...")
-    #         #escribimos el mensaje
-    #         mensaje = lee_mensaje(i,conex_wrap)
-    #         conex_wrap.send(mensaje.encode())
-    #         #recibimos el mensaje
-    #         respuesta = conex_wrap.recv(4096).decode()
-    #         print(respuesta)
-    #         conex_wrap.close()
-            
-    #     i+=1
-    #     time.sleep(10)
-    #     sys.exit()
+    #client_conect()
+    acc = 1
+    for acc in range(302):
+        #Cambiar la funcion depende lo que se quiera hacer
+        client_conect()
+    acc+=1
+    
         
     

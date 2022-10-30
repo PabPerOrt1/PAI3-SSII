@@ -1,2 +1,1 @@
-El usuario 'Agatha' escribio el mensaje: mensaje. Con protocolo 'TLSv1.3'
-El usuario 'Adam' escribio el mensaje: kiriki. Con protocolo 'TLSv1.3'
+El usuario 'Adam' escribio el mensaje: 12re32dewdf. Con protocolo 'TLSv1.3'

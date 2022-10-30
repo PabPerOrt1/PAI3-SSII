@@ -1,3 +1,5 @@
+import socket
+import threading
 from multiprocessing import context
 import ssl,sys,time
 from socket import *
@@ -28,18 +30,20 @@ def comprobarCredenciales(mensajeRecibido):
     else:
         return "Comprobación errónea"
 
-#Funcional para inputs por cmd
-def get_conection():
-    context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-    context.load_cert_chain('Keys/new.pem', 'Keys/private.key')
-    soc = socket()
-    soc.bind(("", int(Puerto)))
-    print(f"El servidor está corriendo en el puerto '{int(Puerto)}'")
-    print("Escuchando conexiones...")
-    soc.listen(5)
-    
-    ssock = context.wrap_socket(soc, server_side=True)
-    conn, addr = ssock.accept()
+
+context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+context.load_cert_chain('Keys/new.pem', 'Keys/private.key')
+soc = socket()
+soc.bind(("", int(Puerto)))
+print(f"El servidor está corriendo en el puerto '{int(Puerto)}'")
+print("Escuchando conexiones...")
+soc.listen(1)
+ssock = context.wrap_socket(soc, server_side=True)
+
+#Para inputs mediante CMD o Prueba 300 para mensajes almacenados
+def worker(*args):
+    conn = args[0]
+    addr = args[1]
     print("Conectando con un cliente", addr)
     mensajeRecibido = conn.recv(4096).decode()
     print(mensajeRecibido)
@@ -50,33 +54,18 @@ def get_conection():
 
     print("Desconectado el cliente", addr)
     conn.close()
-    sys.exit()
 
-if __name__ == "__main__":
-    get_conection()
-    # i = 1
-    # while True:
-    #     while i <302:
-    #         context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-    #         context.load_cert_chain('Keys/new.pem', 'Keys/private.key')
-    #         soc = socket()
-    #         soc.bind(("", int(Puerto)))
-    #         print(f"El servidor está corriendo en el puerto '{int(Puerto)}'")
-    #         print("Escuchando conexiones...")
-    #         soc.listen(300)
-            
-    #         ssock = context.wrap_socket(soc, server_side=True)
-    #         conn, addr = ssock.accept()
-    #         print("Conectando con un cliente", addr)
-    #         mensajeRecibido = conn.recv(4096).decode()
-    #         print(mensajeRecibido)
-    #         if comprobarCredenciales(mensajeRecibido)=="Comprobación exitosa":
-    #             conn.send(("La comprobación ha sido exitosa, estamos guardando su mensaje").encode())
-    #         else: 
-    #             conn.send(("La comprobación ha sido errónea. Inténtelo de nuevo").encode())
+#Para prueba de 300 empleados a la vez
+def worker_Test(*args):
+    conn = args[0]
+    addr = args[1]
+    print("Conectando con un cliente", addr)
 
-    #         print("Desconectado el cliente", addr)
-    #     i+=1
-    #     time.sleep(5)
-    #     conn.close()
-    #     sys.exit()
+acc=1
+while 1:
+    conn, addr = ssock.accept()
+    #Cambiar worker o worker_Test depende lo que se quiera hacer
+    threading.Thread(target=worker, args=(conn, addr)).start()
+    print ("Hay " + str(acc) + " clientes conectados")
+    acc+=1
+        
